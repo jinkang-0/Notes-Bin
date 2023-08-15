@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Note</title>
+    <link rel="stylesheet" href="addNoteWindow.css">
+</head>
+<body>
+    <textarea id="note" spellcheck="false"></textarea>
+    <div>
+        <button id="addNote">Add</button>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+        const noteTextarea = document.querySelector('#note');
+        const addNoteBtn = document.querySelector('#addNote');
+
+        // add note
+        addNoteBtn.addEventListener('click', () => {
+            ipcRenderer.send('note:add', noteTextarea.value);
+        });
+    </script>
+</body>
+</html>

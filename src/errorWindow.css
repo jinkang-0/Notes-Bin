@@ -1,0 +1,35 @@
+@import url('global.css');
+
+body {
+    display: grid;
+    place-content: center;
+    padding: 1rem;
+    height: 100vh;
+}
+
+p {
+    background: var(--submenu);
+    color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+button {
+    display: block;
+    background: var(--green);
+    outline: none;
+    border: none;
+    color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem auto;
+    cursor: pointer;
+    transition: 100ms;
+}
+
+button:hover {
+    filter: brightness(1.05);
+}
+

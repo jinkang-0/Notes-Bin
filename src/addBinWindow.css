@@ -1,0 +1,74 @@
+@import url('global.css');
+
+body {
+    display: grid;
+    place-content: center;
+    width: 100vw;
+    height: 100vh;
+    padding-bottom: 1rem;
+}
+
+/* form */
+form {
+    width: 100%;
+    display: flex;
+}
+
+form > label {
+    margin-right: 1rem;
+}
+
+form input {
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--line1);
+    outline: none;
+    color: white;
+    font-family: Nunito;
+    width: 100%;
+}
+
+form > div {
+    width: 100%;
+    position: relative;
+}
+
+span {
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    top: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: var(--line2);
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: 100ms;
+}
+
+input:focus + span {
+    transform: scaleX(1);
+}
+
+
+
+/* button */
+button {
+    display: block;
+    margin: auto;
+    background: var(--green);
+    color: white;
+    border: none;
+    outline: none;
+    padding: 0.3rem 1rem;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+    font-family: Nunito;
+    cursor: pointer;
+    transition: 100ms;
+}
+
+button:hover {
+    filter: brightness(1.05);
+}

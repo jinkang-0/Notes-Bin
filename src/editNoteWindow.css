@@ -1,0 +1,86 @@
+@import url('global.css');
+
+body {
+    display: grid;
+    place-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+#note {
+    background: var(--note);
+    color: black;
+    font-family: Nunito;
+    outline: none;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    resize: none;
+    user-select: initial;
+    max-width: 100%;
+    width: 80vw;
+    min-height: 7rem;
+    overflow-y: scroll;
+    margin-top: 1rem;
+}
+
+#note::-webkit-scrollbar {
+    width: 5px;
+}
+
+#note::-webkit-scrollbar-track {
+    background: var(--note);
+}
+
+#note::-webkit-scrollbar-thumb {
+    background: var(--background);
+    border-radius: 5px;
+    transition: 100ms;
+}
+
+#note::-webkit-scrollbar-thumb:hover {
+    filter: brightness(1.5);
+}
+
+
+/* buttons */
+div {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    height: 2rem;
+    margin-top: 0.75rem;
+}
+
+button {
+    background: var(--green);
+    outline: none;
+    border: none;
+    color: white;
+    font-family: Nunito;
+    border-radius: 5px;
+    padding: 0.25rem 1rem;
+    cursor: pointer;
+    transition: 100ms;
+}
+
+button:hover {
+    filter: brightness(1.05);
+}
+
+#delete {
+    height: 100%;
+    padding: 0.25rem;
+    margin-right: auto;
+    background: var(--background);
+}
+
+#delete img {
+    height: 100%;
+}
+
+#delete:hover {
+    filter: brightness(1.2);
+}
+
+

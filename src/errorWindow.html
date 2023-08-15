@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Error</title>
+    <link rel="stylesheet" href="errorWindow.css">
+</head>
+<body>
+    <p id="errorMsg"></p>
+    <button id="close">Close</button>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+        const errorMsgText = document.querySelector('#errorMsg');
+        const closeButton = document.querySelector('#close');
+
+        // set error message
+        ipcRenderer.on('error:loadmsg', (e, msg) => {
+            errorMsgText.innerHTML = msg;
+        });
+
+        // handle close
+        closeButton.addEventListener('click', () => {
+            ipcRenderer.send('error:close');
+        });
+    </script>
+</body>
+</html>

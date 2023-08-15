@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Note</title>
+    <link rel="stylesheet" href="editNoteWindow.css">
+</head>
+<body>
+    <textarea id="note"></textarea>
+    <div>
+        <button id="delete">
+            <img src="../assets/trash_can.png">
+        </button>
+        <button id="save">Save</button>
+        <button id="cancel">Cancel</button>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+        const noteArea = document.querySelector('#note');
+        const saveBtn = document.querySelector('#save');
+        const cancelBtn = document.querySelector('#cancel');
+        const deleteBtn = document.querySelector('#delete');
+
+        // set note
+        ipcRenderer.on('note:info', (e, note) => {
+            noteArea.value = note;
+        });
+
+        // handle delete note
+        deleteBtn.addEventListener('click', () => {
+            ipcRenderer.send('note:delete');
+        });
+
+        // handle save note
+        saveBtn.addEventListener('click', () => {
+            ipcRenderer.send('note:update', noteArea.value);
+        });
+
+        // handle cancel edit
+        cancelBtn.addEventListener('click', () => {
+            ipcRenderer.send('note:closeEdit');
+        });        
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>View Bin</title>
+    <link rel="stylesheet" href="viewBinWindow.css">
+</head>
+<body>
+    <nav>
+        <input id="binName" type="text">
+        <button id="deleteBin">
+            <img src="../assets/trash_can.png">
+        </button>
+    </nav>
+    <header>
+        <button id="addNote">Add Note</button>
+        <button id="drawNote">Draw Note</button>
+        <button id="refreshNotes">
+            <img src="../assets/refresh.png">
+        </button>
+    </header>
+    <div id="notesCollection"></div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+        const binNameInput = document.querySelector('#binName');
+        const addNoteBtn = document.querySelector('#addNote');
+        const drawNoteBtn = document.querySelector('#drawNote');
+        const refreshNotesBtn = document.querySelector('#refreshNotes');
+        const deleteBinBtn = document.querySelector('#deleteBin');
+        let clientNotes;
+
+        // update DOM to show info of bin
+        ipcRenderer.on('bin:update', (e, bin) => {
+            binNameInput.value = bin.name;
+            generateNotes(bin.notes);
+        });
+
+        function generateNotes(notes) {
+            notesCollection.innerHTML = "";
+            clientNotes = [];
+
+            for (let i = 0; i < notes.length; i++) {
+                const noteText = document.createElement('p');
+                noteText.innerHTML = notes[i];
+                noteText.addEventListener('click', () => {
+                    ipcRenderer.send('note:showEdit', i);
+                });
+
+                clientNotes.push(noteText);
+                notesCollection.appendChild(noteText);
+            }
+        }
+
+        // context menu for notes
+        window.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            const noteIndex = clientNotes.findIndex(n => n === e.target);
+            if (noteIndex != -1)
+                ipcRenderer.send('bin:contextMenu', noteIndex);
+        });
+
+
+        // update bin name
+        binNameInput.addEventListener('change', () => {
+            ipcRenderer.send('bin:nameChange', binNameInput.value);
+        });
+
+        // add note
+        addNoteBtn.addEventListener('click', () => {
+            ipcRenderer.send('note:showAdd');
+        });
+
+        // draw note
+        drawNoteBtn.addEventListener('click', () => {
+            ipcRenderer.send('note:draw');
+        });
+
+        // refresh notes
+        refreshNotesBtn.addEventListener('click', () => {
+            ipcRenderer.send('note:refresh');
+        });
+
+        // delete bin
+        deleteBinBtn.addEventListener('click', () => {
+            ipcRenderer.send('bin:showDelete');
+        });
+    </script>
+</body>
+</html>

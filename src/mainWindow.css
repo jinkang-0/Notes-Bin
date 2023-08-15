@@ -1,0 +1,73 @@
+@import url('global.css');
+
+body {
+    padding: 1.25rem 2rem;
+}
+
+
+/* header */
+header {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    display: inline-block;
+    font-weight: normal;
+}
+
+header > div {
+    margin: auto;
+    margin-right: 0;
+    height: 2.25rem;
+}
+
+button {
+    display: inline-block;
+    border: none;
+    outline: none;
+    background: none;
+    height: 100%;
+    cursor: pointer;
+    background: var(--background);
+    border-radius: 5px;
+    transition: 100ms;
+}
+
+button:hover {
+    filter: brightness(1.2);
+}
+
+img {
+    height: 100%;
+}
+
+
+/* bins */
+#binCollection {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 10rem);
+    gap: 1rem;
+}
+
+.bin {
+    background: var(--green);
+    padding: 2rem 0.75rem;
+    padding-bottom: 0.25rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: 100ms;
+    font-weight: 200;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.bin:hover {
+    filter: brightness(1.05);
+}
+
+

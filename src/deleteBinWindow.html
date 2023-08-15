@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Delete Bin</title>
+    <link rel="stylesheet" href="deleteBinWindow.css">
+</head>
+<body>
+    <h1>Are you sure you want to delete this bin?</h1>
+    <p id="binName"></p>
+    <div>
+        <button id="yesButton">Yes</button>
+        <button id="noButton">No</button>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+        const binNameText = document.querySelector('#binName');
+        const yesBtn = document.querySelector('#yesButton');
+        const noBtn = document.querySelector('#noButton');
+
+        // update bin name text
+        ipcRenderer.on('bindel:info', (e, name) => {
+            binNameText.innerHTML = name;
+        });
+    
+        // handle confirm
+        yesBtn.addEventListener('click', () => {
+            ipcRenderer.send('bindel:yes');
+        });
+
+        // handle cancel
+        noBtn.addEventListener('click', () => {
+            ipcRenderer.send('bindel:no');
+        });
+    </script>
+</body>
+</html>

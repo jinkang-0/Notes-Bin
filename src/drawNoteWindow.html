@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Drawing Result</title>
+    <link rel="stylesheet" href="drawNoteWindow.css">
+</head>
+<body>
+    <p id="result"></p>
+    <div>
+        <button id="delete">Delete</button>
+        <button id="drawAgain">Draw Again</button>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+        const winningNote = document.querySelector('#result');
+        const deleteBtn = document.querySelector('#delete');
+        const drawAgainbtn = document.querySelector('#drawAgain');
+    
+        // show result
+        ipcRenderer.on('note:drawResult', (e, note) => {
+            winningNote.innerHTML = note;
+        });
+
+        // delete note
+        deleteBtn.addEventListener('click', () => {
+            ipcRenderer.send('note:deleteWinner');
+        });
+
+        // draw another note
+        drawAgainbtn.addEventListener('click', () => {
+            ipcRenderer.send('note:drawAgain');
+        });
+    </script>
+</body>
+</html>

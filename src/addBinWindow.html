@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Bin</title>
+    <link rel="stylesheet" href="addBinWindow.css">
+</head>
+<body>
+    <form>
+        <label>Name</label>
+        <div>
+            <input type="text" id="binName" autofocus>
+            <span></span>
+        </div>
+    </form>
+    <button type="submit">Add</button>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+        const nameInput = document.querySelector('#binName');
+        
+        document.querySelector('button').addEventListener('click', () => {
+            if (nameInput.value !== "")
+                ipcRenderer.send('bin:add', nameInput.value);
+        });
+    </script>
+</body>
+</html>

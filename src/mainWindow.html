@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Notes Bin</title>
+
+    <link rel="stylesheet" href="mainWindow.css">
+</head>
+<body>
+    <header>
+        <h1>Notes Bin</h1>
+        <div>
+            <button id="addBin">
+                <img src="../assets/plus.png">
+            </button>
+            <button id="refreshBins">
+                <img src="../assets/refresh.png">
+            </button>
+        </div>
+    </header>
+    <div id="binCollection"></div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+        const addBinBtn = document.querySelector('#addBin');
+        const refreshBinsBtn = document.querySelector('#refreshBins');
+        const binCollection = document.querySelector('#binCollection');
+        let clientBins;
+
+        // update bins collection
+        ipcRenderer.on('bins:update', (e, bins) => {
+            binCollection.innerHTML = "";
+            clientBins = [];
+
+            for (let i = 0; i < bins.length; i++) {
+                const binDiv = document.createElement('div');
+                const binNameText = document.createTextNode(bins[i].name);
+                binDiv.classList.add('bin');
+                binDiv.appendChild(binNameText);
+
+                binDiv.addEventListener('click', () => {
+                    ipcRenderer.send('bin:view', i);
+                });
+
+                clientBins.push(binDiv);
+                binCollection.appendChild(binDiv);
+            }
+        });
+
+        // context menu
+        window.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            const binIndex = clientBins.findIndex(b => b === e.target);
+            if (binIndex != -1)
+                ipcRenderer.send('main:contextMenu', binIndex);
+        });
+
+        // open add bin window
+        addBinBtn.addEventListener('click', () => {
+            ipcRenderer.send('bin:showAdd');
+        });
+
+        // request to refresh bins
+        refreshBinsBtn.addEventListener('click', () => {
+            ipcRenderer.send('bin:refresh');
+        });
+    </script>
+</body>
+</html>
